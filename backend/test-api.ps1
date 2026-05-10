@@ -1,6 +1,4 @@
-
 # Fast Meal Backend - Simple Test Script
-# Sem caracteres especiais para evitar problemas de codificacao
 
 $API = "http://localhost:8000"
 $PASS = 0

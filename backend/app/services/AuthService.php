@@ -47,12 +47,12 @@ class AuthService {
      * @param string $name User's full name
      * @param string $email User's email address
      * @param string $password User's password
-     * @param string $role User's role (default: 'user')
+     * @param string $role User's role (default: 'student')
      * 
      * @return array User data if successful
      * @throws Exception If registration fails
      */
-    public function register($name, $email, $password, $role = 'user') {
+    public function register($name, $email, $password, $role = 'student') {
         // Validate inputs
         if (!Validator::validateName($name)) {
             throw new Exception('Name must be between 3 and 100 characters');

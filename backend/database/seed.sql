@@ -6,6 +6,21 @@
 USE fast_meal;
 
 -- ============================================================================
+-- LIMPAR DADOS EXISTENTES (respeitar ordem de foreign keys)
+-- ============================================================================
+
+-- Desabilitar verificacao de foreign keys temporariamente
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Limpar dados das tabelas (order importante para foreign keys)
+TRUNCATE TABLE attendances;
+TRUNCATE TABLE tickets;
+TRUNCATE TABLE users;
+
+-- Reabilitar verificacao de foreign keys
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================================================================
 -- USERS SEEDS
 -- Credenciais de teste:
 --   Admin: admin@example.com / admin123
