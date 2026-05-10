@@ -1,0 +1,19 @@
+Estrutura para prompts (vibecoding): 
+1. Contexto
+2. Tarefa
+3. Requisitos
+4. Formato de saída
+5. Restrições
+6. Saída esperada
+
+
+1. Contexto: Estamos a iniciar o desenvolvimento do "Sistema de Atendimento de Fila do Refeitório". A arquitetura exige uma base de dados relacional que suporte utilizadores (estudantes, funcionários e admins), senhas (normais e prioritárias) e o histórico de atendimentos.
+2. Tarefa: Criar o script SQL de criação da base de dados e a inserção de dados iniciais (seeds).
+3. Requisitos: - Criar a BD e três tabelas obrigatórias: users (com roles), tickets (com status e type) e attendances (com timestamps).
+
+Usar Chaves Estrangeiras (Foreign Keys) para relacionar tickets com users, e atendimentos com tickets.
+
+Criar seeds com 1 Admin, 2 Estudantes e 2 Funcionários (passwords em hash estático para teste).
+4. Formato de saída: Código SQL limpo, dividido em secções comentadas.
+5. Restrições: Utilizar sintaxe compatível com MySQL/MariaDB. Nenhuma tabela extra além das solicitadas.
+6. Saída esperada: Dois blocos de código: schema.sql (estrutura) e seed.sql (dados).
