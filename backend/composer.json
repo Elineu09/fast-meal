@@ -1,0 +1,43 @@
+{
+  "name": "fast-meal/backend",
+  "description": "Fast Meal - RESTful API Backend for Canteen Queue Management",
+  "version": "1.0.0",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fast Meal Development Team",
+      "email": "dev@fastmeal.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "ext-ctype": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/utils/Helpers.php"
+    ]
+  },
+  "scripts": {
+    "start": "php -S localhost:8000 -t public",
+    "dev": "php -S 0.0.0.0:8000 -t public",
+    "test": "echo 'Tests pending implementation'"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "queue",
+    "canteen",
+    "management"
+  ],
+  "support": {
+    "docs": "API_DOCUMENTATION.md",
+    "issues": "https://github.com/fast-meal/backend/issues"
+  }
+}
