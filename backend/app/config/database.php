@@ -14,7 +14,7 @@ class Database {
     private $host = 'localhost';
     private $db_name = 'fast_meal';
     private $username = 'root';
-    private $password = '';
+    private $password = 'justChilling#Clear@007';
     private $pdo;
 
     /**

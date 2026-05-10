@@ -17,3 +17,14 @@ Criar seeds com 1 Admin, 2 Estudantes e 2 Funcionários (passwords em hash está
 4. Formato de saída: Código SQL limpo, dividido em secções comentadas.
 5. Restrições: Utilizar sintaxe compatível com MySQL/MariaDB. Nenhuma tabela extra além das solicitadas.
 6. Saída esperada: Dois blocos de código: schema.sql (estrutura) e seed.sql (dados).
+
+1. Contexto: O frontend em Angular precisa de se comunicar com o nosso backend para autenticar utilizadores.
+2. Tarefa: Desenvolver a camada de acesso a dados (PDO) e os endpoints de autenticação em PHP puro.
+3. Requisitos: - Criar config/database.php usando PDO com prepared statements e tratamento de erros (Exception).
+
+Criar AuthController.php e AuthService.php com métodos para Registo e Login.
+
+Utilizar password_hash() e password_verify().
+4. Formato de saída: Ficheiros PHP completos com a estrutura de pastas indicada em comentários.
+5. Restrições: Não usar frameworks, não usar ORM. Todo o retorno deve ser estritamente em JSON. Definir cabeçalhos CORS básicos.
+6. Saída esperada: Código para database.php, AuthService.php, AuthController.php e a rota login.php/register.php.
