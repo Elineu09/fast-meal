@@ -28,3 +28,14 @@ Utilizar password_hash() e password_verify().
 4. Formato de saída: Ficheiros PHP completos com a estrutura de pastas indicada em comentários.
 5. Restrições: Não usar frameworks, não usar ORM. Todo o retorno deve ser estritamente em JSON. Definir cabeçalhos CORS básicos.
 6. Saída esperada: Código para database.php, AuthService.php, AuthController.php e a rota login.php/register.php.
+
+1. Contexto: O sistema precisa gerir a emissão de senhas e a chamada pelo administrador, implementando a nossa "Funcionalidade Inteligente".
+2. Tarefa: Desenvolver os endpoints de gestão de senhas (tickets) e o algoritmo inteligente.
+3. Requisitos: - Lógica de geração: Estudantes recebem prefixo 'A', Funcionários recebem 'P' (prioritário).
+
+Impedir que um utilizador tire uma 2ª senha se já tiver uma 'pendente'.
+
+Criar um método inteligente no QueueService.php que calcule o tempo médio dos últimos 10 atendimentos para estimar o tempo de espera do utilizador atual.
+4. Formato de saída: Código PHP estruturado por ficheiros.
+5. Restrições: Seguir o padrão Controller -> Service -> Repository. O backend não gera o QR Code, apenas devolve os dados em JSON.
+6. Saída esperada: Código para TicketController.php, QueueService.php, e rotas de pedir senha e listar fila.

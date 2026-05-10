@@ -58,8 +58,8 @@ try {
         require_once __DIR__ . '/../app/routes/auth.php';
     
     } elseif (strpos($currentPath, 'api/tickets') === 0) {
-        // Ticket routes (to be implemented)
-        Response::error('Tickets endpoint not yet implemented', 501);
+        // Ticket management routes
+        require_once __DIR__ . '/../app/routes/tickets.php';
     
     } elseif (strpos($currentPath, 'api/queue') === 0) {
         // Queue routes (to be implemented)
