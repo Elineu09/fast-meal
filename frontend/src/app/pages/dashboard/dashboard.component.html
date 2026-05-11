@@ -1,7 +1,86 @@
 <main class="dashboard-shell">
-  <h1>Fast Meal</h1>
-  <p *ngIf="currentUser$ | async as user">
-    Sessão iniciada como {{ user.nome }}.
-  </p>
-  <button class="primary-button" type="button" (click)="logout()">Sair</button>
+  <header class="dashboard-header" *ngIf="currentUser$ | async as user">
+    <div>
+      <span class="eyebrow">Fast Meal</span>
+      <h1>Ola, {{ user.nome }}</h1>
+      <p>Acompanhe a sua senha digital e a posicao na fila.</p>
+    </div>
+    <button class="secondary-button" type="button" (click)="logout()">Sair</button>
+  </header>
+
+  <p *ngIf="errorMessage" class="form-error" role="alert">{{ errorMessage }}</p>
+  <p *ngIf="successMessage" class="form-success" role="status">{{ successMessage }}</p>
+
+  <section class="dashboard-grid" aria-live="polite">
+    <article class="panel ticket-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">Senha atual</span>
+          <h2>{{ activeTicket ? activeTicket.ticket_number : 'Sem senha ativa' }}</h2>
+        </div>
+        <span class="status-pill" *ngIf="activeTicket">
+          {{ statusLabel(activeTicket.status) }}
+        </span>
+      </div>
+
+      <ng-container *ngIf="!isLoading; else loadingTicket">
+        <div *ngIf="activeTicket; else emptyTicket" class="ticket-details">
+          <div>
+            <span>Tipo</span>
+            <strong>{{ typeLabel(activeTicket.type) }}</strong>
+          </div>
+          <div>
+            <span>Senhas a frente</span>
+            <strong>{{ queuePosition?.tickets_ahead ?? 0 }}</strong>
+          </div>
+          <div>
+            <span>Espera estimada</span>
+            <strong>{{ queuePosition?.estimated_wait_formatted ?? '00:00' }}</strong>
+          </div>
+        </div>
+
+        <ng-template #emptyTicket>
+          <p class="muted-text">Ainda nao tem uma senha ativa.</p>
+        </ng-template>
+      </ng-container>
+
+      <ng-template #loadingTicket>
+        <p class="muted-text">A carregar senha...</p>
+      </ng-template>
+
+      <button
+        class="primary-button"
+        type="button"
+        (click)="requestTicket()"
+        [disabled]="isRequesting || !!activeTicket"
+      >
+        {{ isRequesting ? 'A solicitar...' : 'Solicitar Senha' }}
+      </button>
+    </article>
+
+    <article class="panel qr-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">QR Code</span>
+          <h2>Acesso rapido</h2>
+        </div>
+      </div>
+
+      <div class="qr-frame" *ngIf="activeTicket">
+        <p *ngIf="isQrLoading" class="muted-text">A gerar QR Code...</p>
+        <img
+          *ngIf="qrCodeUrl"
+          [src]="qrCodeUrl"
+          [alt]="'QR Code da senha ' + activeTicket.ticket_number"
+          width="280"
+          height="280"
+        >
+        <p *ngIf="qrErrorMessage" class="field-error" role="alert">{{ qrErrorMessage }}</p>
+      </div>
+
+      <p *ngIf="!activeTicket" class="muted-text">
+        O QR Code aparece aqui depois de solicitar uma senha.
+      </p>
+    </article>
+  </section>
 </main>

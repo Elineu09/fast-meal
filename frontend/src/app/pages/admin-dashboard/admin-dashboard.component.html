@@ -1,0 +1,89 @@
+<main class="dashboard-shell">
+  <header class="dashboard-header" *ngIf="currentUser$ | async as user">
+    <div>
+      <span class="eyebrow">Administracao</span>
+      <h1>Fila atual</h1>
+      <p>{{ user.nome }} pode chamar a proxima senha pendente.</p>
+    </div>
+    <div class="header-actions">
+      <button class="secondary-button" type="button" (click)="loadQueue()" [disabled]="isLoading">
+        Atualizar
+      </button>
+      <button class="secondary-button" type="button" (click)="logout()">Sair</button>
+    </div>
+  </header>
+
+  <p *ngIf="errorMessage" class="form-error" role="alert">{{ errorMessage }}</p>
+  <p *ngIf="successMessage" class="form-success" role="status">{{ successMessage }}</p>
+
+  <section class="admin-summary" *ngIf="queueStatus">
+    <article class="metric">
+      <span>Total</span>
+      <strong>{{ queueStatus.statistics.total_pending }}</strong>
+    </article>
+    <article class="metric">
+      <span>Prioritarias</span>
+      <strong>{{ queueStatus.statistics.priority_tickets }}</strong>
+    </article>
+    <article class="metric">
+      <span>Normais</span>
+      <strong>{{ queueStatus.statistics.normal_tickets }}</strong>
+    </article>
+    <article class="metric">
+      <span>Tempo medio</span>
+      <strong>{{ queueStatus.statistics.average_service_time_formatted }}</strong>
+    </article>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading admin-actions">
+      <div>
+        <span class="eyebrow">Atendimento</span>
+        <h2>{{ calledTicket ? 'Ultima chamada: ' + calledTicket.ticket_number : 'Chamada de senha' }}</h2>
+      </div>
+      <button
+        class="primary-button"
+        type="button"
+        (click)="callNext()"
+        [disabled]="isCalling || !hasPendingTickets"
+      >
+        {{ isCalling ? 'A chamar...' : 'Chamar Proximo' }}
+      </button>
+    </div>
+
+    <p *ngIf="isLoading" class="muted-text">A carregar fila...</p>
+
+    <div class="table-wrap" *ngIf="!isLoading && queueStatus?.queue?.length">
+      <table class="queue-table">
+        <thead>
+          <tr>
+            <th>Posicao</th>
+            <th>Senha</th>
+            <th>Utente</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Espera</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of queueStatus?.queue; trackBy: trackTicket">
+            <td data-label="Posicao">{{ ticket.position }}</td>
+            <td data-label="Senha">
+              <strong>{{ ticket.ticket_number }}</strong>
+            </td>
+            <td data-label="Utente">{{ ticket.user_name }}</td>
+            <td data-label="Tipo">{{ typeLabel(ticket.type) }}</td>
+            <td data-label="Estado">
+              <span class="status-pill">{{ statusLabel(ticket.status) }}</span>
+            </td>
+            <td data-label="Espera">{{ ticket.estimated_wait_formatted }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p *ngIf="!isLoading && !queueStatus?.queue?.length" class="muted-text">
+      Nao existem senhas pendentes neste momento.
+    </p>
+  </section>
+</main>

@@ -50,3 +50,12 @@ Implementar o auth.guard.ts para proteger rotas.
 4. Formato de saída: Comandos Angular CLI necessários e o código TypeScript/HTML correspondente.
 5. Restrições: Usar TypeScript com tipagem forte. Aplicar princípios DRY. O CSS deve suportar variáveis CSS para o Dark/Light mode.
 6. Saída esperada: auth.service.ts, login.component.ts e login.component.html.
+
+1. Contexto: O utente precisa de pedir senhas e o admin de as chamar. O utente tem de ver o QR code gerado.
+2. Tarefa: Desenvolver o Dashboard do Estudante e do Admin, integrando a API externa.
+3. Requisitos: - Estudante: Botão "Solicitar Senha". Ao receber o sucesso do backend, usar o qr.service.ts para chamar a QuickChart API e renderizar a imagem do QR Code com o número da senha.
+
+Admin: Tabela com a fila atual (consumindo o endpoint do backend) e botão "Chamar Próximo".
+4. Formato de saída: Código TypeScript e HTML dos componentes.
+5. Restrições: Garantir responsividade (mobile-first). O serviço QR deve tratar erros caso a API externa falhe.
+6. Saída esperada: dashboard.component.ts, admin-dashboard.component.ts e a integração com a tag <img> dinâmica do QuickChart.

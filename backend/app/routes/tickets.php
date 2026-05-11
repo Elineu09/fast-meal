@@ -17,6 +17,7 @@
  * PUBLIC INFO ENDPOINTS (No auth required):
  * GET    /api/tickets/queue           - Get public queue status
  * GET    /api/tickets/analytics       - Get queue analytics
+ * POST   /api/tickets/call-next       - Call next pending ticket
  * 
  * This file defines routing logic and dispatches requests to controller methods
  */
@@ -117,6 +118,16 @@ switch ($action) {
     case 'analytics':
         if ($requestMethod === 'GET') {
             $ticketController->getQueueAnalytics();
+        } else {
+            Response::error('Method not allowed', 405);
+        }
+        break;
+
+    // CALL NEXT TICKET
+    // POST /api/tickets/call-next
+    case 'call-next':
+        if ($requestMethod === 'POST') {
+            $ticketController->callNextTicket();
         } else {
             Response::error('Method not allowed', 405);
         }

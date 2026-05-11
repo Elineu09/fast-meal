@@ -28,6 +28,11 @@ export class AuthService {
     return this.sessionSubject.value?.token ?? null;
   }
 
+  get currentUser(): User | null {
+    const session = this.sessionSubject.value;
+    return session ? this.toUser(session) : null;
+  }
+
   login(credentials: LoginRequest): Observable<AuthSession> {
     return this.api.post<ApiResponse<AuthSession>, LoginRequest>('auth/login', credentials).pipe(
       map((response) => this.unwrapResponse(response)),

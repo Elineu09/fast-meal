@@ -337,5 +337,42 @@ class TicketService {
             throw new Exception('Failed to mark ticket completed: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Call the next pending ticket in queue order.
+     *
+     * @param int $adminUserId Admin user ID
+     * @param int|null $counterNumber Service counter number
+     *
+     * @return array Called ticket data
+     * @throws Exception If user is not admin or queue is empty
+     */
+    public function callNextTicket($adminUserId, $counterNumber = null) {
+        try {
+            $admin = $this->getUserById($adminUserId);
+
+            if (!$admin || $admin['role'] !== 'admin') {
+                throw new Exception('Only administrators can call the next ticket');
+            }
+
+            $ticket = $this->ticketRepository->getNextPendingTicket();
+
+            if (!$ticket) {
+                throw new Exception('No pending tickets in queue');
+            }
+
+            $this->ticketRepository->updateStatus($ticket['id'], 'in_attendance');
+            $this->ticketRepository->createAttendance($ticket['id'], $counterNumber);
+
+            $ticket['status'] = 'in_attendance';
+            $ticket['priority'] = ($ticket['type'] === 'priority');
+            $ticket['called_at'] = date('Y-m-d H:i:s');
+            $ticket['counter_number'] = $counterNumber;
+
+            return $ticket;
+        } catch (Exception $e) {
+            throw new Exception('Failed to call next ticket: ' . $e->getMessage());
+        }
+    }
 }
 ?>

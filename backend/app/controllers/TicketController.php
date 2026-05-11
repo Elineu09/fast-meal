@@ -418,6 +418,48 @@ class TicketController {
     }
 
     /**
+     * Call the next pending ticket.
+     *
+     * Endpoint: POST /api/tickets/call-next
+     *
+     * Requires JSON body:
+     * {
+     *     "user_id": 1,
+     *     "counter_number": 1
+     * }
+     */
+    public function callNextTicket() {
+        try {
+            $adminUserId = $this->getCurrentUserId();
+
+            if (!$adminUserId) {
+                Response::error('Unauthorized', 401);
+            }
+
+            $input = json_decode(file_get_contents('php://input'), true) ?? [];
+            $counterNumber = isset($input['counter_number']) ? intval($input['counter_number']) : null;
+
+            $calledTicket = $this->ticketService->callNextTicket($adminUserId, $counterNumber);
+
+            Response::success(
+                $calledTicket,
+                'Next ticket called successfully',
+                200
+            );
+        } catch (Exception $e) {
+            $statusCode = 400;
+
+            if (strpos($e->getMessage(), 'Only administrators') !== false) {
+                $statusCode = 403;
+            } elseif (strpos($e->getMessage(), 'No pending tickets') !== false) {
+                $statusCode = 404;
+            }
+
+            Response::error($e->getMessage(), $statusCode);
+        }
+    }
+
+    /**
      * Get user's queue position
      * 
      * Endpoint: GET /api/tickets/my-position

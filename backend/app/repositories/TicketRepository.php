@@ -229,6 +229,51 @@ class TicketRepository {
     }
 
     /**
+     * Get the next pending ticket in service order.
+     *
+     * @return array|null Next pending ticket with user info or null if queue is empty
+     */
+    public function getNextPendingTicket() {
+        try {
+            $query = 'SELECT t.*, u.nome as user_name, u.role as user_role
+                      FROM tickets t
+                      JOIN users u ON t.user_id = u.id
+                      WHERE t.status = "pending"
+                      ORDER BY
+                        CASE WHEN t.type = "priority" THEN 0 ELSE 1 END,
+                        t.created_at ASC
+                      LIMIT 1';
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Failed to fetch next pending ticket: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Create an attendance record when a ticket is called.
+     *
+     * @param int $ticketId Ticket ID
+     * @param int|null $counterNumber Service counter number
+     *
+     * @return bool True if attendance was created
+     */
+    public function createAttendance($ticketId, $counterNumber = null) {
+        try {
+            $query = 'INSERT INTO attendances (ticket_id, called_at, counter_number, created_at, updated_at)
+                      VALUES (?, NOW(), ?, NOW(), NOW())';
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$ticketId, $counterNumber]);
+
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            throw new Exception('Failed to create attendance: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Get completed attendances (last N records) for time estimation
      * 
      * @param int $limit Number of records (default: 10)

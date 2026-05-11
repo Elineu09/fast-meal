@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 
-import { LoginRequest } from '../../models/auth.model';
+import { LoginRequest, UserRole } from '../../models/auth.model';
 import { AuthService } from '../../services/auth.service';
 import { extractApiErrorMessage } from '../../shared/helpers/http-error.helper';
 
@@ -69,8 +69,8 @@ export class LoginComponent implements OnInit {
         this.isSubmitting = false;
       })
     ).subscribe({
-      next: () => {
-        void this.router.navigateByUrl(this.getSafeReturnUrl());
+      next: (session) => {
+        void this.router.navigateByUrl(this.getSafeReturnUrl(session.role));
       },
       error: (error: unknown) => {
         this.errorMessage = extractApiErrorMessage(
@@ -86,11 +86,15 @@ export class LoginComponent implements OnInit {
     return control.hasError(errorName) && (control.dirty || control.touched);
   }
 
-  private getSafeReturnUrl(): string {
+  private getSafeReturnUrl(role: UserRole): string {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
 
     if (returnUrl && returnUrl.startsWith('/') && !returnUrl.startsWith('//')) {
       return returnUrl;
+    }
+
+    if (role === 'admin') {
+      return '/admin-dashboard';
     }
 
     return '/dashboard';
