@@ -1,4 +1,4 @@
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'admin' | 'employee' | 'student';
 
 export interface ApiResponse<TData> {
   success: boolean;

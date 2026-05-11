@@ -32,17 +32,17 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- Hash: bcrypt(admin123) - gerado com PHP password_hash()
 INSERT INTO users (nome, email, password, role) VALUES
-('Administrador Sistema', 'admin@example.com', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36P4/TVm', 'admin');
+('Administrador Sistema', 'admin@example.com', '$2y$12$c7arq0LAplhORrDOfP.wVO2mMV4Re6OSRUpMGCgPOumeXaeq6tIZS', 'admin');
 
 -- Hash: bcrypt(func123) - gerado com PHP password_hash()
 INSERT INTO users (nome, email, password, role) VALUES
-('João da Silva', 'funcionar1@example.com', '$2y$10$slYQmyNdGzin7olVN3junOYvnH8KO0jey/xY4yS0EUgPfQbXK2Z4e', 'employee'),
-('Maria Santos', 'funcionar2@example.com', '$2y$10$slYQmyNdGzin7olVN3junOYvnH8KO0jey/xY4yS0EUgPfQbXK2Z4e', 'employee');
+('João da Silva', 'funcionar1@example.com', '$2y$12$uEvDpkaT6Lzu8n23vMLiC.PyK0h0kTyHy.jaVaRbHqjrXOh8tGMVu', 'employee'),
+('Maria Santos', 'funcionar2@example.com', '$2y$12$uEvDpkaT6Lzu8n23vMLiC.PyK0h0kTyHy.jaVaRbHqjrXOh8tGMVu', 'employee');
 
 -- Hash: bcrypt(student123) - gerado com PHP password_hash()
 INSERT INTO users (nome, email, password, role) VALUES
-('Pedro Oliveira', 'estudante1@example.com', '$2y$10$yEGKO4UTJrKF79L5GEqb7.K3jbV0z1u0vMR8j4IGWv2M2BhIdLJHy', 'student'),
-('Ana Costa', 'estudante2@example.com', '$2y$10$yEGKO4UTJrKF79L5GEqb7.K3jbV0z1u0vMR8j4IGWv2M2BhIdLJHy', 'student');
+('Pedro Oliveira', 'estudante1@example.com', '$2y$12$RUOGisBvkOOhXSnJaLYn6.DxK0goheYt3fYM/Q0eIk07ZXT4YFt/q', 'student'),
+('Ana Costa', 'estudante2@example.com', '$2y$12$RUOGisBvkOOhXSnJaLYn6.DxK0goheYt3fYM/Q0eIk07ZXT4YFt/q', 'student');
 
 -- ============================================================================
 -- TICKETS SEEDS

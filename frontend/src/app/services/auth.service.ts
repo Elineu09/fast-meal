@@ -145,7 +145,7 @@ export class AuthService {
       typeof session.id === 'number' &&
       typeof session.nome === 'string' &&
       typeof session.email === 'string' &&
-      (session.role === 'user' || session.role === 'admin') &&
+      (session.role === 'admin' || session.role === 'employee' || session.role === 'student') &&
       typeof session.token === 'string' &&
       session.token.length > 0
     );
