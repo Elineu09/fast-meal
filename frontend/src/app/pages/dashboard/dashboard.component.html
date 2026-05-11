@@ -1,0 +1,7 @@
+<main class="dashboard-shell">
+  <h1>Fast Meal</h1>
+  <p *ngIf="currentUser$ | async as user">
+    Sessão iniciada como {{ user.nome }}.
+  </p>
+  <button class="primary-button" type="button" (click)="logout()">Sair</button>
+</main>

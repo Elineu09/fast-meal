@@ -1,0 +1,99 @@
+<main class="auth-shell">
+  <section class="auth-panel" aria-labelledby="register-title">
+    <aside class="auth-brand">
+      <span class="brand-mark" aria-hidden="true">FM</span>
+      <div>
+        <h1>Fast Meal</h1>
+        <p>Crie a sua conta para pedir senhas digitais e acompanhar a fila em tempo real.</p>
+      </div>
+    </aside>
+
+    <div class="auth-card">
+      <div>
+        <h2 id="register-title">Criar conta</h2>
+        <p>Use um email válido e uma palavra-passe forte para proteger a sua sessão.</p>
+      </div>
+
+      <p *ngIf="errorMessage" class="form-error" role="alert">{{ errorMessage }}</p>
+
+      <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+        <div class="form-field">
+          <label for="nome">Nome</label>
+          <input
+            id="nome"
+            type="text"
+            autocomplete="name"
+            formControlName="nome"
+            [attr.aria-invalid]="hasError('nome', 'required') || hasError('nome', 'minlength')"
+          >
+          <span class="field-error" *ngIf="hasError('nome', 'required')">
+            O nome é obrigatório.
+          </span>
+          <span class="field-error" *ngIf="hasError('nome', 'minlength')">
+            O nome deve ter pelo menos 2 caracteres.
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            [attr.aria-invalid]="hasError('email', 'required') || hasError('email', 'email')"
+          >
+          <span class="field-error" *ngIf="hasError('email', 'required')">
+            O email é obrigatório.
+          </span>
+          <span class="field-error" *ngIf="hasError('email', 'email')">
+            Introduza um email válido.
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Palavra-passe</label>
+          <input
+            id="password"
+            type="password"
+            autocomplete="new-password"
+            formControlName="password"
+            [attr.aria-invalid]="hasError('password', 'required') || hasError('password', 'weakPassword')"
+          >
+          <span class="field-error" *ngIf="hasError('password', 'required')">
+            A palavra-passe é obrigatória.
+          </span>
+          <span class="field-error" *ngIf="hasError('password', 'weakPassword')">
+            Use 8+ caracteres, maiúscula, minúscula, número e símbolo.
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label for="confirmPassword">Confirmar palavra-passe</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            formControlName="confirmPassword"
+            [attr.aria-invalid]="hasError('confirmPassword', 'required') || passwordsDoNotMatch()"
+          >
+          <span class="field-error" *ngIf="hasError('confirmPassword', 'required')">
+            Confirme a palavra-passe.
+          </span>
+          <span class="field-error" *ngIf="passwordsDoNotMatch()">
+            As palavras-passe não coincidem.
+          </span>
+        </div>
+
+        <button class="primary-button" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'A criar...' : 'Criar conta' }}
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Já tem conta?
+        <a routerLink="/login">Iniciar sessão</a>
+      </p>
+    </div>
+  </section>
+</main>

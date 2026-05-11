@@ -39,3 +39,14 @@ Criar um método inteligente no QueueService.php que calcule o tempo médio dos 
 4. Formato de saída: Código PHP estruturado por ficheiros.
 5. Restrições: Seguir o padrão Controller -> Service -> Repository. O backend não gera o QR Code, apenas devolve os dados em JSON.
 6. Saída esperada: Código para TicketController.php, QueueService.php, e rotas de pedir senha e listar fila.
+
+1. Contexto: O backend está pronto. Precisamos de consumir a API RESTful e criar a interface.
+2. Tarefa: Criar a estrutura base do Angular, configurar chamadas HTTP e implementar as páginas de Login/Registo.
+3. Requisitos: - Configurar o api.service.ts e auth.service.ts com o HttpClient.
+
+Criar formulários reativos para o login e registo.
+
+Implementar o auth.guard.ts para proteger rotas.
+4. Formato de saída: Comandos Angular CLI necessários e o código TypeScript/HTML correspondente.
+5. Restrições: Usar TypeScript com tipagem forte. Aplicar princípios DRY. O CSS deve suportar variáveis CSS para o Dark/Light mode.
+6. Saída esperada: auth.service.ts, login.component.ts e login.component.html.
